@@ -7,6 +7,7 @@ using System.IO;
 
 public class SensorDataTracker : MonoBehaviour
 {
+    //todo türme von hanoi
     public InputActionProperty leftHandPos;
     public InputActionProperty rightHandPos;
 
