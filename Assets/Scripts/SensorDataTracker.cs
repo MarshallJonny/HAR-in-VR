@@ -11,13 +11,15 @@ public class SensorDataTracker : MonoBehaviour
     public InputActionProperty rightHandPos;
 
     public bool isRecording;
-    public List<(float time, Vector3 leftHandPos, Vector3 rightHandPos)> currentRecording = new();
+    List<(float time, Vector3 leftHandPos, Vector3 rightHandPos)> currentRecording = new();
+
+    public TMPro.TextMeshProUGUI textDisplay;
 
     void Update()
     {
         isRecording = GetComponent<XRGrabInteractable>().isSelected;
 
-        if (isRecording) 
+        if (isRecording)
             recordData();
         else 
             if (currentRecording.Count != 0) // save and reset if the recording ends
@@ -34,6 +36,8 @@ public class SensorDataTracker : MonoBehaviour
             Time.time,
             leftHandPos.action.ReadValue<Vector3>(),
             rightHandPos.action.ReadValue<Vector3>()));
+
+        textDisplay.text = $"[{System.DateTime.Now.ToLongTimeString()}] Recording {currentRecording.Count} Frames... (let go to stop)";
     }
 
     public string ToCSV()
@@ -57,14 +61,15 @@ public class SensorDataTracker : MonoBehaviour
     {
         var content = ToCSV();
 
-        //var folder = Application.persistentDataPath;
-        var folder = Application.streamingAssetsPath;
-        if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
+        var folder = Application.persistentDataPath;
+        //var folder = Application.streamingAssetsPath;
+        //if (!Directory.Exists(folder)) Directory.CreateDirectory(folder);
 
         var filePath = Path.Combine(folder, "currentRecording.csv");
 
         File.WriteAllText(filePath, content);
 
         Debug.Log($"CSV file written to \"{filePath}\"");
+        textDisplay.text = $"[{System.DateTime.Now.ToLongTimeString()}] CSV file written to \"{filePath}\"";
     }
 }
