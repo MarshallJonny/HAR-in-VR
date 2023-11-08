@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlateSensor : MonoBehaviour
 {
+    public TMPro.TextMeshProUGUI display;
     public Material on;
     Material off;
 
@@ -16,10 +17,12 @@ public class PlateSensor : MonoBehaviour
     {
         Debug.Log("Plate collided with " + collision.gameObject.name);
         GetComponent<MeshRenderer>().material = on;
+        display.text = collision.gameObject.name;
     }
 
     private void OnCollisionExit(Collision collision)
     {
         GetComponent<MeshRenderer>().material = off;
+        display.text = "";
     }
 }
