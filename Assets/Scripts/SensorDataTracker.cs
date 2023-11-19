@@ -34,7 +34,12 @@ public class SensorDataTracker : MonoBehaviour
 
         foreach (var device in inputDevices)
         {
-            Debug.Log(string.Format("Device found with name '{0}' and role '{1}'", device.name, device.characteristics.ToString()));
+            //Debug.Log(string.Format("Device found with name '{0}' and role '{1}'", device.name, device.characteristics.ToString()));
+            if (device.characteristics.HasFlag(UnityEngine.XR.InputDeviceCharacteristics.Right)) {
+                bool IsPrimaryButtonTouched;
+                device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryTouch, out IsPrimaryButtonTouched);
+                Debug.Log(IsPrimaryButtonTouched);
+            }
         }
     }
 
