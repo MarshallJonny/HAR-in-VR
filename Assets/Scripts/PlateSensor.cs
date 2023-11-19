@@ -15,7 +15,7 @@ public class PlateSensor : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Plate collided with " + collision.gameObject.name);
+        //Debug.Log("Plate collided with " + collision.gameObject.name);
         GetComponent<MeshRenderer>().material = on;
         display.text = collision.gameObject.name;
     }
