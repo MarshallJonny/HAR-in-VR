@@ -7,7 +7,6 @@ using System.IO;
 
 public class SensorDataTracker : MonoBehaviour
 {
-    //todo türme von hanoi
     public InputActionProperty leftHandPos;
     public InputActionProperty rightHandPos;
 
@@ -28,6 +27,15 @@ public class SensorDataTracker : MonoBehaviour
                 SaveToFile();
                 currentRecording = new(); // reset recording
             }
+
+        //TESTING WHAT EACH SENSOR DOES
+        var inputDevices = new List<UnityEngine.XR.InputDevice>();
+        UnityEngine.XR.InputDevices.GetDevices(inputDevices);
+
+        foreach (var device in inputDevices)
+        {
+            Debug.Log(string.Format("Device found with name '{0}' and role '{1}'", device.name, device.characteristics.ToString()));
+        }
     }
 
     public void recordData()
